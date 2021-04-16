@@ -1,4 +1,3 @@
-
 fn ownership_1(input: String) -> String {
     let mut string1 = String::new();
     string1.push_str("I got ");

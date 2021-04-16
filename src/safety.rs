@@ -1,46 +1,46 @@
 use std::fmt::{Display, Formatter};
-
-fn safety_with_references() {
+pub fn safety_with_references() {
     let mut object = SomeHeavyWeightObject::new();
+    object.boxed.field = 289;
     let r1= &object.boxed.field;
     // cannot create this mutable reference, the target for r1 might become invalid
-    // by modifying the boxed to point somewhere else
+    // by modifying the box to point somewhere else
 
     // let r2 = &mut object;
     dbg!(r1);
 }
 
-pub fn safety_with_arithmetics(input: i8) -> i8 {
+pub fn safety_in_arithmetics(input: i8) -> i8 {
     let x = 91i8;
     // let y = 69i8;
     x + input
 }
 
-fn safety_with_error_handling() -> Result<(), Error> {
-    ErrorExample::new().errors?.all?.the?.way()?;
+pub fn safety_in_error_handling() -> Result<(), Error> {
+    ErrorExample::new()?.errors()?.all()?.the()?.way();
 
     Ok(())
 }
 
-struct ErrorExample {}
+pub struct ErrorExample {}
 impl ErrorExample {
     fn new() -> Result<ErrorExample, Error> {
         Ok(ErrorExample {})
     }
 
-    fn errors(&self) -> Result<&self, Error> {
-        Err(Error)
+    fn errors(&self) -> Result<&Self, Error> {
+        Err(Error {})
     }
 
-    fn all(&self) -> Result<&self, Error> {
+    fn all(&self) -> Result<&Self, Error> {
         Ok(&self)
     }
 
-    fn the(&self) -> Result<&self, Error> {
+    fn the(&self) -> Result<&Self, Error> {
         Ok(&self)
     }
 
-    fn way(&self) -> Result<&self, Error> {
+    fn way(&self) -> Result<&Self, Error> {
         Ok(&self)
     }
 
@@ -48,7 +48,7 @@ impl ErrorExample {
 }
 
 #[derive(Debug)]
-struct Error {}
+pub struct Error {}
 impl Display for Error{
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("{:?}", self))
