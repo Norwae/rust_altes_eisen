@@ -7,6 +7,13 @@ struct TwoOf<A> {
     second: A
 }
 
+
+// possible layouts in memory:
+// int_in_the_middle first second
+// int_in_the_middle second first
+// first int_in_the_middle second
+// ...
+
 type LargeArray = [u8;2048];
 
 pub fn sizing() {

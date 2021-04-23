@@ -1,4 +1,6 @@
 use std::fmt::{Display, Formatter};
+use std::ptr::null;
+
 pub fn safety_with_references() {
     let mut object = SomeHeavyWeightObject::new();
     object.boxed.field = 289;
@@ -19,7 +21,21 @@ pub fn safety_in_arithmetics(input: i8) -> i8 {
 pub fn safety_in_error_handling() -> Result<(), Error> {
     ErrorExample::new()?.errors()?.all()?.the()?.way();
 
+    let _ = match ErrorExample::new()  {
+        Ok(new) => /* */ Ok(()),
+        Err(e) => Err(e)
+    };
+
     Ok(())
+}
+
+pub fn unsafety() -> i32 {
+    let mut x: * mut i32 = null() as *mut i32;
+    unsafe {
+        let current = *x;
+        *x += 1;
+        return current
+    }
 }
 
 pub struct ErrorExample {}
