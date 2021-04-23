@@ -38,6 +38,10 @@ pub fn add_three<A: Add<Output=A>>(first: A, second: A, third: A) -> A {
     first.add(second).add(third)
 }
 
+pub fn dynamic(stringlike: &dyn AsRef<str>) {
+    println!("The string is {}", stringlike.as_ref())
+}
+
 // the emitted definition is heavily optimized anyway, see machine code
 
 /*

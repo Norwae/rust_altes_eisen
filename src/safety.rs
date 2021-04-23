@@ -1,5 +1,6 @@
 use std::fmt::{Display, Formatter};
 use std::ptr::null;
+use std::mem::transmute;
 
 pub fn safety_with_references() {
     let mut object = SomeHeavyWeightObject::new();
@@ -29,12 +30,12 @@ pub fn safety_in_error_handling() -> Result<(), Error> {
     Ok(())
 }
 
-pub fn unsafety() -> i32 {
-    let mut x: * mut i32 = null() as *mut i32;
+pub fn unsafety() -> f32 {
+    let mut x: * mut i32 = null::<i32>() as *mut i32;
     unsafe {
         let current = *x;
         *x += 1;
-        return current
+        return transmute(current)
     }
 }
 
